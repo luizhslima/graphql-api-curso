@@ -1,0 +1,11 @@
+D:\AppData\npm
++-- @vue/cli@3.9.3
++-- apollo@2.20.0
++-- create-react-app@3.0.1
++-- crunchy@1.5.0
++-- get-graphql-schema@2.1.2
++-- graphql-cli@3.0.14
++-- http-server@0.9.0
++-- npm@6.10.3
+`-- react-native-cli@2.0.1
+

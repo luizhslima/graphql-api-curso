@@ -1,0 +1,86 @@
+type Comment {
+  id: ID!
+  comment: String!
+  createdAt: String!
+  updatedAt: String!
+  user: User!
+  post: Post!
+}
+
+input CommentInput {
+  comment: String!
+  post: Int!
+  user: Int!
+}
+
+type Mutation {
+  createPost(input: PostInput!): Post
+  updatePost(id: ID!, input: PostInput!): Post
+  deletePost(id: ID!): Boolean
+  createUser(input: UserCreateInput!): User
+  updateUser(id: ID!, input: UserUpdateInput): User
+  updateUserPassword(id: ID!, input: UserUpdatePasswordInput): Boolean
+  deleteUser(id: ID!): Boolean
+  createComment(input: CommentInput!): Comment
+  updateComment(id: ID!, input: CommentInput!): Comment
+  deleteComment(id: ID!): Boolean
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  photo: String!
+  createdAt: String!
+  updated: String!
+  author: User!
+  comments(first: Int, offset: Int): [Comment!]!
+}
+
+input PostInput {
+  title: String!
+  content: String!
+  photo: String!
+  author: Int!
+}
+
+type Query {
+  posts(first: Int, offset: Int): [Post!]!
+  post(id: ID!): Post
+  users(first: Int, offset: Int): [User!]!
+  user(id: ID!): User
+  commentsByPost(id: ID!, first: Int, offset: Int): [Comment!]!
+}
+
+type Schema {
+  query: Query
+  mutation: Mutation
+}
+
+"""User definition type"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  photo: String
+  createdAt: String!
+  updatedAt: String!
+  posts(first: Int, offset: Int): [Post!]!
+}
+
+input UserCreateInput {
+  name: String!
+  email: String!
+  password: String
+}
+
+input UserUpdateInput {
+  name: String!
+  email: String!
+  photo: String
+}
+
+input UserUpdatePasswordInput {
+  password: String!
+}
+
