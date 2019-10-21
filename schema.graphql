@@ -10,7 +10,6 @@ type Comment {
 input CommentInput {
   comment: String!
   post: Int!
-  user: Int!
 }
 
 type Mutation {
@@ -19,9 +18,9 @@ type Mutation {
   deletePost(id: ID!): Boolean
   createToken(email: String!, password: String!): Token
   createUser(input: UserCreateInput!): User
-  updateUser(id: ID!, input: UserUpdateInput): User
-  updateUserPassword(id: ID!, input: UserUpdatePasswordInput): Boolean
-  deleteUser(id: ID!): Boolean
+  updateUser(input: UserUpdateInput): User
+  updateUserPassword(input: UserUpdatePasswordInput): Boolean
+  deleteUser: Boolean
   createComment(input: CommentInput!): Comment
   updateComment(id: ID!, input: CommentInput!): Comment
   deleteComment(id: ID!): Boolean
@@ -42,7 +41,6 @@ input PostInput {
   title: String!
   content: String!
   photo: String!
-  author: Int!
 }
 
 type Query {
@@ -50,6 +48,7 @@ type Query {
   post(id: ID!): Post
   users(first: Int, offset: Int): [User!]!
   user(id: ID!): User
+  currentUser: User
   commentsByPost(id: ID!, first: Int, offset: Int): [Comment!]!
 }
 

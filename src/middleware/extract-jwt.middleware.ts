@@ -24,7 +24,7 @@ export const extractJwtMiddleware = () : RequestHandler => {
                 attributes: ['id', 'email']
             }).then((user: UserInstance) => {
                 if(user) {
-                    req['context']['authuser'] = {
+                    req['context']['authUser'] = {
                         id: user.get('id'),
                         email: user.get('email')
                     }
