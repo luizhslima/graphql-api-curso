@@ -17,6 +17,7 @@ type Mutation {
   createPost(input: PostInput!): Post
   updatePost(id: ID!, input: PostInput!): Post
   deletePost(id: ID!): Boolean
+  createToken(email: String!, password: String!): Token
   createUser(input: UserCreateInput!): User
   updateUser(id: ID!, input: UserUpdateInput): User
   updateUserPassword(id: ID!, input: UserUpdatePasswordInput): Boolean
@@ -55,6 +56,10 @@ type Query {
 type Schema {
   query: Query
   mutation: Mutation
+}
+
+type Token {
+  token: String!
 }
 
 """User definition type"""

@@ -3,6 +3,9 @@ import { DbConnection } from "../../../interfaces/DbConnectionInterface";
 import { PostInstace } from "../../../models/PostModel";
 import { Transaction } from "sequelize";
 import { handleError } from "../../../utils/utils";
+import { compose } from "../../composable/composable.resolver";
+import { authResolver, authResolvers } from "../../composable/auth.resolver";
+import { AuthUser } from "../../../interfaces/AuthUserInterface";
 export const postResolvers = {
 
     Post:{
@@ -44,24 +47,26 @@ export const postResolvers = {
     },
 
     Mutation: {
-        createPost: (parent, { input }, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => { 
+        createPost: compose(...authResolvers)((parent, { input }, { db, authUser }: { db: DbConnection, authUser:AuthUser }, info: GraphQLResolveInfo) => { 
+            input.author = authUser.id;
             return db.sequelize.transaction((t:Transaction) => {
                 return db.Post
                 .create(input, {transaction: t});
             }).catch(handleError)
-        },
+        }),
 
-        updatePost: (parent, {id, input} , {db} : {db:DbConnection}, info: GraphQLResolveInfo) => {
+        updatePost: compose(...authResolvers)((parent, {id, input} , {db, authUser} : {db:DbConnection, authUser:AuthUser}, info: GraphQLResolveInfo) => {
             id = parseInt(id);
             return db.sequelize.transaction((t: Transaction) => {
                 return db.Post
                 .findById(id)
                 .then((post: PostInstace) => {
                     if(!post) throw new Error(`Post with id ${id} not found`);
+                    input.author;
                     return post.update(input, {transaction: t});
                 })
             }).catch(handleError);
-        },
+        }),
 
 
         deletePost: (parent, {id} , {db} : {db:DbConnection}, info: GraphQLResolveInfo) => {
