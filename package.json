@@ -23,7 +23,7 @@
     "gulp": "3.9.1",
     "gulp-clean": "0.3.2",
     "gulp-typescript": "3.2.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.19",
     "nodemon": "1.12.0",
     "typescript": "2.5.3"
   },
